@@ -4,3 +4,11 @@ dist
 
 # Prisma generated client
 src/generated
+
+# Neon + Copilot agent files
+.neon
+.agents
+skills-lock.json
+
+# Stale generated output
+generated
