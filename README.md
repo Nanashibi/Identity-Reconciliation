@@ -4,7 +4,7 @@ Backend service for linking customer contacts across multiple purchases.
 
 ## Live Endpoint
 
-**Base URL:** `https://your-app.onrender.com`
+**Base URL:** `https://identity-reconciliation-5caq.onrender.com`
 
 ### POST /identify
 
@@ -30,11 +30,35 @@ Identifies and consolidates contact information.
 }
 ```
 
+## Testing
+
+Run the full test suite against the live endpoint:
+
+```bash
+npm test
+```
+
+To test against a different URL:
+
+```bash
+BASE_URL=https://your-url.onrender.com npm test
+```
+
+The test script covers:
+- New contact creation (primary)
+- Same info re-submitted (no duplicate created)
+- Same phone, new email → secondary created
+- Same email, new phone → secondary created
+- Only email provided
+- Only phone provided
+- Two separate primaries being merged (older stays primary)
+- Invalid request body (no email or phone) → 400
+
 ## Tech Stack
 
 - Node.js + TypeScript
 - Express.js
-- PostgreSQL + Prisma ORM
+- PostgreSQL (Neon) + Prisma ORM
 - Hosted on Render
 
 ## Local Development
@@ -44,7 +68,3 @@ Identifies and consolidates contact information.
 3. Set up `.env` with your `DATABASE_URL`
 4. Run migrations: `npm run migrate`
 5. Start dev server: `npm run dev`
-
-## Deployment
-
-The app is configured for Render deployment with Neon PostgreSQL.
